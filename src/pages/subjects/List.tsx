@@ -9,11 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DEPARTMENTS_OPTIONS } from "@/constants";
+import { DEPARTMENT_OPTIONS } from "@/constants";
 import { CreateButton } from "@/components/refine-ui/buttons/create";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { useTable } from "@refinedev/react-table";
-import { subject } from "@/types";
+import { Subject } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 const SubjectList = () => {
@@ -27,9 +27,9 @@ const SubjectList = () => {
     {field: 'name', operator: "contains" as const, value: searchQuery}
   ] : [];
 
-  const subjectTable = useTable<subject>({
+  const subjectTable = useTable<Subject>({
     // We memorize the columns to avoid creating every column in each render
-    columns: useMemo<ColumnDef<subject>[]>(
+    columns: useMemo<ColumnDef<Subject>[]>(
       () => [
         {
           id: "code",
@@ -50,7 +50,7 @@ const SubjectList = () => {
         },
         {
           id: "department",
-          accessorKey: "department",
+          accessorKey: "department.name",
           size: 150,
           header: () => <p className="column-title">Department</p>,
           cell: ({ getValue }) => (
@@ -110,8 +110,8 @@ const SubjectList = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Departments</SelectItem>
-                {DEPARTMENTS_OPTIONS.map((department) => (
-                  <SelectItem key={department.Value} value={department.Value}>
+                {DEPARTMENT_OPTIONS.map((department) => (
+                  <SelectItem key={department.value} value={department.value}>
                     {department.label}
                   </SelectItem>
                 ))}
